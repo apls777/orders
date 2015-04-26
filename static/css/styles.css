@@ -1,0 +1,18 @@
+body { padding-bottom: 40px; background-color: #eee; }
+table { background-color: #fff; }
+
+.form-signin { max-width: 330px; padding: 15px; margin: 0 auto; }
+.form-signin .form-signin-heading, .form-signin .checkbox { margin-bottom: 10px; }
+.form-signin .checkbox { font-weight: normal; }
+.form-signin .form-control { position: relative; height: auto; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; padding: 10px; font-size: 16px; }
+.form-signin .form-control:focus { z-index: 2; }
+.form-signin input.top { margin-bottom: -1px; border-bottom-right-radius: 0; border-bottom-left-radius: 0; }
+.form-signin input.middle { margin-bottom: -1px; border-radius: 0; }
+.form-signin input.bottom { margin-bottom: 15px; border-top-left-radius: 0; border-top-right-radius: 0; }
+
+#registration-form { border-left: solid #c0c0c0 1px; }
+#user-balance { padding: 15px; }
+#error-page { width: 100%; text-align: center; }
+#error-page h1 { font-size: 60px; font-weight: 100; text-shadow: 0 1px 0 #fff; }
+#system-balance { width: 100%; text-align: center; }
+#system-balance.h1 { font-size: 40px; font-weight: 100; text-shadow: 0 1px 0 #fff; }

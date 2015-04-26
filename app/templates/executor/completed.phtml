@@ -1,0 +1,29 @@
+<? /** @var array $data */ ?>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th><?=_('Имя заказа')?></th>
+            <th><?=_('Описание')?></th>
+            <th><?=_('Стоимость')?></th>
+            <th><?=_('Заказчик')?></th>
+            <th><?=_('Дата/время выполнения')?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <? if (!empty($data['orders'])): ?>
+            <? foreach ($data['orders'] as $row): ?>
+                <tr>
+                    <td><?=$row['title']?></td>
+                    <td><?=nl2br($row['description'])?></td>
+                    <td><?=$row['cost']?></td>
+                    <td><?=$row['customer_login']?></td>
+                    <td><?=date('Y-m-d H:i:s', $row['completed'])?></td>
+                </tr>
+            <? endforeach; ?>
+        <? else: ?>
+            <tr><td colspan="5"><?=_('Вы пока не выполнили ни одного заказа')?></td></tr>
+        <? endif; ?>
+        </tbody>
+    </table>
+</div>

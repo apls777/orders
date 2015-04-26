@@ -1,0 +1,41 @@
+<? append_script('js/sign_in.js'); ?>
+<div class="row">
+    <div class="col-md-4 col-md-offset-2 col-sm-12">
+        <form class="form-signin">
+            <h2 class="form-signin-heading"><?=_('Вход')?></h2>
+
+            <label for="inputEmail" class="sr-only"><?=_('Логин')?></label>
+            <input name="login" type="text" id="inputEmail" class="form-control top" placeholder="<?=_('Логин')?>" required autofocus>
+
+            <label for="inputPassword" class="sr-only"><?=_('Пароль')?></label>
+            <input name="pass" type="password" id="inputPassword" class="form-control bottom" placeholder="<?=_('Пароль')?>" required autocomplete="off">
+
+            <a href="javascript:" onclick="singIn.auth(this)" class="btn btn-lg btn-primary btn-block"><?=_('Войти')?></a>
+            <div class="error-message" style="display: none;"></div>
+        </form>
+    </div>
+    <div id="registration-form" class="col-md-4 col-sm-12">
+        <form class="form-signin">
+            <h2 class="form-signin-heading"><?=_('Регистрация')?></h2>
+            <div style="margin-bottom: 15px;">
+                <label class="radio-inline">
+                    <input type="radio" name="reg_role" id="inlineRadio1" value="<?=ROLE_CUSTOMER?>"> <?=_('Заказчик')?>
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="reg_role" id="inlineRadio2" value="<?=ROLE_EXECUTOR?>"> <?=_('Исполнитель')?>
+                </label>
+            </div>
+            <label for="regEmail" class="sr-only"><?=_('Логин')?></label>
+            <input name="reg_login" type="text" id="regEmail" class="form-control top" placeholder="<?=_('Логин')?>" required autofocus autocomplete="off">
+
+            <label for="regPass" class="sr-only"><?=_('Пароль')?></label>
+            <input name="reg_pass" type="password" id="regPass" class="form-control middle" placeholder="<?=_('Пароль')?>" required autocomplete="off">
+
+            <label for="regPassRepeat" class="sr-only"><?=_('Еще раз')?></label>
+            <input name="reg_pass_retry" type="password" id="regPassRepeat" class="form-control bottom" placeholder="<?=_('Еще раз')?>" required autocomplete="off">
+
+            <a href="javascript:" onclick="singIn.register(this)" class="btn btn-lg btn-primary btn-block"><?=_('Зарегистрироваться')?></a>
+            <div class="error-message" style="display: none;"></div>
+        </form>
+    </div>
+</div>

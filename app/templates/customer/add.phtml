@@ -1,0 +1,21 @@
+<? append_script('js/orders.js'); ?>
+<div class="row">
+    <div class="col-md-6 col-lg-offset-3">
+        <form>
+            <div class="form-group">
+                <label for="inputTitle"><?=_('Имя заказа')?></label>
+                <input type="text" name="title" class="form-control" id="inputTitle">
+            </div>
+            <div class="form-group">
+                <label for="inputDesc"><?=_('Описание')?></label>
+                <textarea name="desc" class="form-control" id="inputDesc"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="inputCost"><?=_('Стоимость')?></label>
+                <input name="cost" type="text" class="form-control" id="inputCost">
+            </div>
+            <a onclick="orders.saveOrder(this)" class="btn btn-primary"><?=_('Добавить заказ')?></a>
+            <div class="error-message" style="display: none;"></div>
+        </form>
+    </div>
+</div>
