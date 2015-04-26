@@ -1,7 +1,9 @@
 <? append_script('js/orders.js'); ?>
+<? /** @var array $data */ ?>
 <div class="row">
     <div class="col-md-6 col-lg-offset-3">
         <form>
+            <input type="hidden" name="token" value="<?=$data['token']?>">
             <div class="form-group">
                 <label for="inputTitle"><?=_('Имя заказа')?></label>
                 <input type="text" name="title" class="form-control" id="inputTitle">

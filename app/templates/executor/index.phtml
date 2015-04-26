@@ -21,7 +21,7 @@
                     <td><?=$row['cost']?></td>
                     <td><?=$row['customer_login']?></td>
                     <td><?=date('Y-m-d H:i:s', $row['inserted'])?></td>
-                    <td style="text-align: center;"><a href="javascript:" onclick="orders.completeOrder(this, <?=$row['order_id']?>)" class="btn btn-primary"><?=_('Выполнить заказ')?></a></td>
+                    <td style="text-align: center;"><a href="javascript:" onclick="orders.completeOrder(this, <?=$row['order_id']?>, '<?=$data['token']?>')" class="btn btn-primary"><?=_('Выполнить заказ')?></a></td>
                 </tr>
             <? endforeach; ?>
         <? else: ?>

@@ -160,7 +160,7 @@ function complete_order($order_id, $executor_id, &$user_earned = false) {
     }
 
     // получаем размер комиссии системы
-    $project_earned = (string)round($order['cost'] * (PROJECT_PERCENT / 100), 2, PHP_ROUND_HALF_EVEN);
+    $project_earned = bcmul($order['cost'], bcdiv(PROJECT_PERCENT, 100));
     if (bccomp($project_earned, MIN_PROJECT_COMMISSION) === -1) {
         $project_earned = MIN_PROJECT_COMMISSION;
     }

@@ -63,6 +63,28 @@ function get_legacy_param($name, $default = false) {
     return $_REQUEST[$name];
 }
 
+/**
+ * Генерация токена для защиты от CSRF
+ *
+ * @return string
+ */
+function generate_token() {
+    $token = md5(microtime(true) . mt_rand(0, 1000000000));
+    setcookie('token', $token, null, '/');
+    return $token;
+}
+
+/**
+ * Проверяем токен
+ *
+ * @param $token
+ * @return bool
+ */
+function check_token($token) {
+    $c_token = isset($_COOKIE['token']) ? $_COOKIE['token'] : '';
+    return ($token === $c_token);
+}
+
 function ajax_response(array $data, $message = '') {
     global $view_no_render;
     $view_no_render = true;

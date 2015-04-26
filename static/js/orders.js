@@ -15,16 +15,20 @@ var orders = {
             });
         }
     },
-    completeOrder: function(el, orderId) {
+    completeOrder: function(el, orderId, token) {
         var _this = this;
         if (!_this.requestLock) {
             _this.requestLock = true;
-            $.post('/executor/completeOrder/', { order_id: orderId }, function(data) {
-                if (data.ret) {
-                    $('#user-balance span').text(data.new_balance);
+            $.post('/executor/completeOrder/', { order_id: orderId, token: token }, function(data) {
+                if (data.html) {
+                    base.popup.open(data.html);
+                    $(el).attr('disabled', 'disabled').text(data.button_title);
+                    if (data.ret) {
+                        $('#user-balance span').text(data.new_balance);
+                    }
+                } else {
+                    alert(data.message);
                 }
-                base.popup.open(data.html);
-                $(el).attr('disabled', 'disabled').text(data.button_title);
                 _this.requestLock = false;
             });
         }

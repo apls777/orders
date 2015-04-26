@@ -28,6 +28,7 @@ function executor_index_action() {
     }
 
     $view_data['orders'] = $orders;
+    $view_data['token'] = generate_token();
 
     return render('executor/index.phtml', $view_data);
 }
@@ -55,6 +56,10 @@ function executor_completed_action() {
 function executor_completeOrder_action() {
     global $user;
     $order_id = (int)get_param('order_id');
+
+    if (!check_token(get_param('token'))) {
+        return ajax_error(_('Неверный токен. Попробуйте перезагрузить страницу.'));
+    }
 
     $res = complete_order($order_id, $user['user_id'], $user_earned);
     if (!$res) {

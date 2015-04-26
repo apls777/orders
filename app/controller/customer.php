@@ -35,15 +35,21 @@ function customer_index_action() {
 
 function customer_add_action() {
     global $view_data;
-    $view_data['head_title'] = $view_data['page_title'] = _('Добавление заказа');
 
-    return render('customer/add.phtml');
+    $view_data['head_title'] = $view_data['page_title'] = _('Добавление заказа');
+    $view_data['token'] = generate_token();
+
+    return render('customer/add.phtml', $view_data);
 }
 
 function customer_saveOrder_action() {
     $title = get_param('title');
     $description = get_param('desc');
     $cost = get_param('cost');
+
+    if (!check_token(get_param('token'))) {
+        return ajax_error(_('Неверный токен. Попробуйте перезагрузить страницу.'));
+    }
 
     if (empty($title)) {
         return ajax_error(_('Вы не заполнили имя заказа'));
