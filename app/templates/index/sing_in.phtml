@@ -1,6 +1,6 @@
 <? append_script('js/sign_in.js'); ?>
 <div class="row">
-    <div class="col-md-4 col-md-offset-2 col-sm-12">
+    <div id="signin-form" class="col-md-4 col-md-offset-2 col-sm-12">
         <form class="form-signin">
             <h2 class="form-signin-heading"><?=_('Вход')?></h2>
 
@@ -11,13 +11,35 @@
             <input name="pass" type="password" id="inputPassword" class="form-control bottom" placeholder="<?=_('Пароль')?>" required autocomplete="off">
 
             <a href="javascript:" onclick="singIn.auth(this)" class="btn btn-lg btn-primary btn-block"><?=_('Войти')?></a>
-            <div class="error-message" style="display: none;"></div>
+            <div class="error-wrap">
+                <div class="error-message" style="display: none;"></div>
+            </div>
+            <table class="table">
+                <tr>
+                    <td colspan="3"><b><?=_('Тестовые аккаунты')?></b></td>
+                </tr>
+                <tr>
+                    <td><?=_('Баланс системы')?></td>
+                    <td>admin</td>
+                    <td>Test11</td>
+                </tr>
+                <tr>
+                    <td><?=_('Заказчик')?></td>
+                    <td>customer</td>
+                    <td>Test11</td>
+                </tr>
+                <tr>
+                    <td><?=_('Исполнитель')?></td>
+                    <td>executor</td>
+                    <td>Test11</td>
+                </tr>
+            </table>
         </form>
     </div>
     <div id="registration-form" class="col-md-4 col-sm-12">
         <form class="form-signin">
             <h2 class="form-signin-heading"><?=_('Регистрация')?></h2>
-            <div style="margin-bottom: 15px;">
+            <div class="roles">
                 <label class="radio-inline">
                     <input type="radio" name="reg_role" id="inlineRadio1" value="<?=ROLE_CUSTOMER?>"> <?=_('Заказчик')?>
                 </label>

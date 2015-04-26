@@ -10,7 +10,10 @@ table { background-color: #fff; }
 .form-signin input.middle { margin-bottom: -1px; border-radius: 0; }
 .form-signin input.bottom { margin-bottom: 15px; border-top-left-radius: 0; border-top-right-radius: 0; }
 
-#registration-form { border-left: solid #c0c0c0 1px; }
+#signin-form { border-right: solid #c0c0c0 1px; }
+#signin-form table.table { background-color: transparent; }
+#signin-form .error-wrap { height: 55px; }
+#registration-form .roles { margin-bottom: 15px; }
 #user-balance { padding: 15px; }
 #error-page { width: 100%; text-align: center; }
 #error-page h1 { font-size: 60px; font-weight: 100; text-shadow: 0 1px 0 #fff; }

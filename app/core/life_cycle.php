@@ -13,7 +13,7 @@ function run($url, array $prev_urls = array()) {
     $prev_urls[$url] = 1;
 
     // разбиваем url на секции
-    $url = reset(explode('?', $url));
+    $url = explode('?', $url)[0];
     $sections = preg_split('/\//', $url, -1, PREG_SPLIT_NO_EMPTY);
 
     // получаем имя контроллера
