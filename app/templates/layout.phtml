@@ -54,7 +54,7 @@
                         <li><a href="/customer/"><?=_('Мои заказы')?></a></li>
                         <li><a href="/customer/add/"><?=_('Добавить заказ')?></a></li>
                     <? elseif ($user['role'] == ROLE_EXECUTOR): ?>
-                        <li><a href="/executor/"><?=_('Список заказов')?></a></li>
+                        <li><a href="/executor/"><?=_('Доступные заказы')?></a></li>
                         <li><a href="/executor/completed/"><?=_('Выполненные заказы')?></a></li>
                     <? endif; ?>
                     <li><a href="javascript:" onclick="base.signOut()"><?=_('Выйти')?></a></li>
