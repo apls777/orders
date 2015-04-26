@@ -152,9 +152,20 @@ function complete_order($order_id, $executor_id, &$user_earned = false) {
         return false;
     }
 
-    // обновляем баланс пользователя
     bcscale(2);
+    // такого быть не должно, но стоимость заказа не может быть меньше MIN_ORDER_COST
+    if (bccomp($order['cost'], MIN_ORDER_COST) === -1) {
+        db_rollback($table);
+        return false;
+    }
+
+    // получаем размер комиссии системы
     $project_earned = (string)round($order['cost'] * (PROJECT_PERCENT / 100), 2, PHP_ROUND_HALF_EVEN);
+    if (bccomp($project_earned, MIN_PROJECT_COMMISSION) === -1) {
+        $project_earned = MIN_PROJECT_COMMISSION;
+    }
+
+    // обновляем баланс пользователя
     $user_earned = bcsub($order['cost'], $project_earned);
     $res = increase_user_balance($executor_id, $user_earned);
     if (!$res) {

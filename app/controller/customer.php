@@ -63,6 +63,10 @@ function customer_saveOrder_action() {
         return ajax_error(_('Стоимость не может быть отрицательной'));
     }
 
+    if ($cost < MIN_ORDER_COST) {
+        return ajax_error(_('Слишком маленькая стоимость заказа'));
+    }
+
     if ($cost > MAX_ORDER_COST) {
         return ajax_error(_('Слишком большая стоимость заказа'));
     }
