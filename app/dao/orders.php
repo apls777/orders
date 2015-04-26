@@ -153,8 +153,9 @@ function complete_order($order_id, $executor_id, &$user_earned = false) {
     }
 
     // обновляем баланс пользователя
-    $project_earned = round($order['cost'] * (PROJECT_PERCENT / 100), 2);
-    $user_earned = $order['cost'] - $project_earned;
+    $cost = (float)$order['cost'];
+    $project_earned = round($cost * (PROJECT_PERCENT / 100), 2, PHP_ROUND_HALF_EVEN);
+    $user_earned = $cost - $project_earned;
     $res = increase_user_balance($executor_id, $user_earned);
     if (!$res) {
         db_rollback($table);
