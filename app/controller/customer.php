@@ -57,6 +57,7 @@ function customer_saveOrder_action() {
     if (!is_numeric($cost)) {
         return ajax_error(_('Некорректное значение стоимости'));
     }
+    $cost = (float)$cost;
 
     if ($cost < 0) {
         return ajax_error(_('Стоимость не может быть отрицательной'));
@@ -64,6 +65,11 @@ function customer_saveOrder_action() {
 
     if ($cost > MAX_ORDER_COST) {
         return ajax_error(_('Слишком большая стоимость заказа'));
+    }
+
+    $parts = explode('.', $cost);
+    if (isset($parts[1]) && strlen($parts[1]) > 2) {
+        return ajax_error(_('Стоимость не может быть указана с точностью больше, чем 2 знака после запятой.'));
     }
 
     global $user;
