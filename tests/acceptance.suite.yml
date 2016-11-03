@@ -10,9 +10,9 @@ modules:
         - \Helper\Acceptance
         - WebDriver:
             url: http://localhost
-            host: 'testqwe123:68d89191-ae15-40b1-aa5a-a11b2b6d07f4@localhost'
+            host: '%SAUCE_USER%:%SAUCE_KEY%@localhost'
             port: 4445
             browser: chrome
             capabilities:
-                tunnel-identifier: 1
+                tunnel-identifier: '%TRAVIS_JOB_NUMBER%'
                 platform: 'Windows 10'
