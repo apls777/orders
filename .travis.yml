@@ -7,15 +7,16 @@ matrix:
   allow_failures:
     - php: 5.6
 
-# We don't want to run linux commands as super user
-#false means Travis will run this in a container
-#sudo: false
-
 # Cache folder, you can delete cache from Travis CI web interface
 cache:
-    directories:
-        - vendor
-        - $HOME/.composer/cache
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+
+addons:
+  sauce_connect:
+    username: "testqwe123"
+    access_key: "68d89191-ae15-40b1-aa5a-a11b2b6d07f4"
 
 # Disable x-debug to speed up things
 before_install: phpenv config-rm xdebug.ini
@@ -38,4 +39,4 @@ before_script:
   - sudo service apache2 restart
 
 script:
-    - ./vendor/bin/codecept run
+  - ./vendor/bin/codecept run

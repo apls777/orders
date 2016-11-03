@@ -7,6 +7,12 @@
 class_name: AcceptanceTester
 modules:
     enabled:
-        - PhpBrowser:
-            url: http://localhost/myapp
         - \Helper\Acceptance
+        - WebDriver:
+            url: http://localhost
+            host: 'testqwe123:68d89191-ae15-40b1-aa5a-a11b2b6d07f4@localhost'
+            port: 4445
+            browser: chrome
+            capabilities:
+                tunnel-identifier: 1
+                platform: 'Windows 10'
