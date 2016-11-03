@@ -3,11 +3,11 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th><?=_('Имя заказа')?></th>
-            <th><?=_('Описание')?></th>
-            <th><?=_('Стоимость')?></th>
-            <th><?=_('Заказчик')?></th>
-            <th><?=_('Дата/время выполнения')?></th>
+            <th><?=_('Name')?></th>
+            <th><?=_('Description')?></th>
+            <th><?=_('Price')?></th>
+            <th><?=_('Customer')?></th>
+            <th><?=_('Date of completion')?></th>
         </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
                 </tr>
             <? endforeach; ?>
         <? else: ?>
-            <tr><td colspan="5"><?=_('Вы пока не выполнили ни одного заказа')?></td></tr>
+            <tr><td colspan="5"><?=_('You have no any completed orders')?></td></tr>
         <? endif; ?>
         </tbody>
     </table>

@@ -12,7 +12,7 @@ function db_connect($table) {
         $db_config = $config['db'][$db_server];
         $db_conn = mysqli_connect($db_config['host'], $db_config['user'], $db_config['password'], $db_config['db_name']);
         if (mysqli_connect_errno() !== 0) {
-            die(_('Не удалось подключиться к БД'));
+            die(_('Can\'t connect to DB'));
         }
         mysqli_query($db_conn, 'SET CHARACTER SET utf8');
         $db_connections[$db_server] = $db_conn;
@@ -24,7 +24,7 @@ function db_connect($table) {
 function db_query($sql, $table) {
     $result = mysqli_query(db_connect($table), $sql);
     if ($result === false) {
-        trigger_error(_('Ошибка SQL: "') . $sql . '"', E_ERROR);
+        trigger_error(_('SQL Error: "') . $sql . '"', E_ERROR);
     }
 
     return $result;
@@ -44,7 +44,7 @@ function db_insert($table, array $data, $ignore = false) {
 
     $query = db_query($sql, $table);
     if (!$query) {
-        trigger_error(_('Ошибка при выполнении INSERT'), E_ERROR);
+        trigger_error(_('Insert error'), E_ERROR);
     }
 
     return $query;
@@ -67,7 +67,7 @@ function db_update($table, array $data, $where = false) {
 
     $query = db_query($sql, $table);
     if (!$query) {
-        trigger_error(_('Ошибка при выполнении UPDATE'), E_ERROR);
+        trigger_error(_('Update error'), E_ERROR);
     }
 
     return $query;
@@ -82,7 +82,7 @@ function db_affected_rows($table) {
 }
 
 /**
- * Получаем все записи
+ * Get all rows
  *
  * @param $sql
  * @param $table
@@ -99,7 +99,7 @@ function db_select($sql, $table) {
 }
 
 /**
- * Получаем только первую запись
+ * Get only first row
  *
  * @param $sql
  * @param $table
@@ -110,21 +110,21 @@ function db_select_row($sql, $table) {
 }
 
 /**
- * Начало транзакции
+ * Begin a transaction
  */
 function db_begin($table) {
     db_query('BEGIN', $table);
 }
 
 /**
- * Успешное завершение транзакции
+ * Commit a transaction
  */
 function db_commit($table) {
     db_query('COMMIT', $table);
 }
 
 /**
- * Откат транзакции
+ * Rollback a transaction
  */
 function db_rollback($table) {
     db_query('ROLLBACK', $table);

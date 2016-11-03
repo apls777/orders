@@ -5,7 +5,7 @@ define('PASSWORD_SALT', 'SQRAZ26zRSNBZe1s');
 require APP_PATH . 'dao/user.php';
 
 /**
- * Получаем авторизованного пользователя
+ * Get authorized user
  *
  * @return array|bool
  */
@@ -19,7 +19,7 @@ function get_user() {
 }
 
 /**
- * Авторизуем пользователя
+ * Authorize user
  *
  * @param array $newUser
  */
@@ -30,7 +30,7 @@ function set_user(array $newUser) {
 }
 
 /**
- * Разлогиниваем пользователя
+ * Clear user session
  */
 function clear_user() {
     if (isset($_SESSION[SESSION_KEY_UID])) {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Проверяем, что текущий пользователь - админ
+ * Check that current user is an admin
  */
 function admin_pre_process() {
     global $user;
@@ -13,7 +13,7 @@ function admin_pre_process() {
 function admin_index_action() {
     global $view_data;
 
-    $view_data['head_title'] = _('Баланс системы');
+    $view_data['head_title'] = _('System balance');
     $view_data['system_user'] = get_user_by_id(SYSTEM_USER_ID);
 
     return render('admin/index.phtml', $view_data);

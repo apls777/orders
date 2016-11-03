@@ -6,68 +6,68 @@ function run($url, array $prev_urls = array()) {
     global $internal_redirect_url;
     $internal_redirect_url = false;
 
-    // проверяем, что внутренний редирект не зациклился
+    // check that internal redirect has no infinite loop
     if (isset($prev_urls[$url])) {
-        die('Повторный редирект на URL "' . $url . '"');
+        die('Repeated redirection for "' . $url . '"');
     }
     $prev_urls[$url] = 1;
 
-    // разбиваем url на секции
+    // split URL by sections
     $url = explode('?', $url)[0];
     $sections = preg_split('/\//', $url, -1, PREG_SPLIT_NO_EMPTY);
 
-    // получаем имя контроллера
+    // get controller name
     $controller_name = !empty($sections[0]) ? $sections[0] : 'index';
-    // проверяем, что в имени контроллера нет ничего лишнего
+    // check controller name
     if (ctype_alnum($controller_name)) {
-        // проверяем, что такой контроллер существует
+        // check that controller exists
         $controller_path = APP_PATH . 'controller/' . $controller_name . '.php';
         if (file_exists($controller_path)) {
             require_once $controller_path;
-            // получаем имя экшена и проверяем, что в нем нет недопустимых символов
+            // get action name and check it
             $action_name = !empty($sections[1]) ? $sections[1] : 'index';
             if (ctype_alnum($action_name)) {
-                // получаем имя функции-экшена и проверяем, что она существует
+                // check that action function exists
                 $action_func = $controller_name . '_' . $action_name  . '_action';
                 if (function_exists($action_func)) {
-                    // если у контроллера есть функция pre_process, запускаем сначала ее
+                    // call a "pre_process" function if it exists
                     $pre_process_func = $controller_name . '_pre_process';
                     if (function_exists($pre_process_func)) {
                         $pre_process_func();
-                        // проверяем, не было ли внутреннего редиректа
+                        // check if there was an internal redirect
                         if ($internal_redirect_url) {
                             return run($internal_redirect_url, $prev_urls);
                         }
                     }
-                    // запускаем экшен
+                    // call action function
                     $content = $action_func();
-                    // проверяем, не было ли внутреннего редиректа
+                    // check if there was an internal redirect
                     if ($internal_redirect_url) {
                         return run($internal_redirect_url, $prev_urls);
                     }
                 } else {
-                    // экшен не найден
-                    $content = render_error(404, _('Страница не существует'));
+                    // action was not found
+                    $content = render_error(404, _('Page doesn\'t exist'));
                 }
             } else {
-                // недопустимое имя экшена
+                // wrong action name
                 $content = render_error(403);
             }
         } else {
-            // контроллер не найден
-            $content = render_error(404, _('Страница не существует'));
+            // controller was not found
+            $content = render_error(404, _('Page doesn\'t exist'));
         }
     } else {
-        // недопустимое имя контроллера
+        // wrong controller name
         $content = render_error(403);
     }
 
     global $view_no_render;
     if ($view_no_render) {
-        // возвращаем контент "как есть"
+        // return raw content
         return $content;
     } else {
-        // оборачиваем контент в лайаут
+        // render content with layout
         global $view_data;
         $view_data['content_html'] = $content;
         return render('layout.phtml', $view_data);

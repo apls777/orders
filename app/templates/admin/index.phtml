@@ -1,8 +1,8 @@
 <? /** @var array $data */ ?>
 <? if ($data['system_user']): ?>
     <div id="system-balance">
-        <h1><?=_('Баланс системы:')?> <?=$data['system_user']['balance']?></h1>
+        <h1><?=_('System balance:')?> <?=$data['system_user']['balance']?></h1>
     </div>
 <? else: ?>
-    <?=_('Ошибка! Не найден системный пользователь.')?>
+    <?=_('Error! System user was not found.')?>
 <? endif; ?>

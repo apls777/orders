@@ -45,21 +45,21 @@
                     <span class="icon-bar"></span>
                 </button>
             <? endif; ?>
-            <a class="navbar-brand" href="/"><?=_('Заказы')?></a>
+            <a class="navbar-brand" href="/"><?=_('Orders')?></a>
         </div>
         <? if ($user): ?>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <? if ($user['role'] == ROLE_CUSTOMER): ?>
-                        <li><a href="/customer/"><?=_('Мои заказы')?></a></li>
-                        <li><a href="/customer/add/"><?=_('Добавить заказ')?></a></li>
+                        <li><a href="/customer/"><?=_('My Orders')?></a></li>
+                        <li><a href="/customer/add/"><?=_('Add Order')?></a></li>
                     <? elseif ($user['role'] == ROLE_EXECUTOR): ?>
-                        <li><a href="/executor/"><?=_('Доступные заказы')?></a></li>
-                        <li><a href="/executor/completed/"><?=_('Выполненные заказы')?></a></li>
+                        <li><a href="/executor/"><?=_('Available Orders')?></a></li>
+                        <li><a href="/executor/completed/"><?=_('Completed Orders')?></a></li>
                     <? endif; ?>
-                    <li><a href="javascript:" onclick="base.signOut()"><?=_('Выйти')?></a></li>
+                    <li><a href="javascript:" onclick="base.signOut()"><?=_('Sign Out')?></a></li>
                     <? if ($user['role'] == ROLE_EXECUTOR): ?>
-                        <li><div id="user-balance"><?=_('Баланс: ')?><span><?=$user['balance']?></span></div></li>
+                        <li><div id="user-balance"><?=_('Balance: ')?><span><?=$user['balance']?></span></div></li>
                     <? endif; ?>
                 </ul>
             </div><!-- /.nav-collapse -->

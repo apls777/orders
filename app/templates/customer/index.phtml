@@ -1,6 +1,6 @@
 <? /** @var array $data */ ?>
 <? if ($data['is_new']): ?>
-    <div id="order-added" class="alert alert-success"><p class="text-small"><?=_('Заказ успешно добавлен')?></p></div>
+    <div id="order-added" class="alert alert-success"><p class="text-small"><?=_('Order was successfully added')?></p></div>
     <script>
         $(function() {
             setTimeout(function() { $('#order-added').slideUp('slow'); }, 3000);
@@ -11,11 +11,11 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th><?=_('Имя заказа')?></th>
-                <th><?=_('Описание')?></th>
-                <th><?=_('Стоимость')?></th>
-                <th><?=_('Исполнитель')?></th>
-                <th><?=_('Дата/время выполнения')?></th>
+                <th><?=_('Name')?></th>
+                <th><?=_('Description')?></th>
+                <th><?=_('Price')?></th>
+                <th><?=_('Executor')?></th>
+                <th><?=_('Date of completion')?></th>
             </tr>
         </thead>
         <tbody>
@@ -25,12 +25,12 @@
                     <td><?=$row['title']?></td>
                     <td><?=nl2br($row['description'])?></td>
                     <td><?=$row['cost']?></td>
-                    <td><? if ($row['executor_login']): ?><?=$row['executor_login']?><? else: ?><i><?=_('Отсутствует')?></i><? endif; ?></td>
-                    <td><? if ($row['completed']): ?><?=date('Y-m-d H:i:s', $row['completed'])?><? else: ?><i><?=_('Не выполнен')?></i><? endif; ?></td>
+                    <td><? if ($row['executor_login']): ?><?=$row['executor_login']?><? else: ?><i><?=_('No executor')?></i><? endif; ?></td>
+                    <td><? if ($row['completed']): ?><?=date('Y-m-d H:i:s', $row['completed'])?><? else: ?><i><?=_('Not completed')?></i><? endif; ?></td>
                 </tr>
             <? endforeach; ?>
         <? else: ?>
-            <tr><td colspan="5"><?=_('Вы пока не добавили ни одного заказа')?></td></tr>
+            <tr><td colspan="5"><?=_('You have no any created orders')?></td></tr>
         <? endif; ?>
       </tbody>
     </table>

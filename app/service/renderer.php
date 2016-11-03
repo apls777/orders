@@ -7,7 +7,7 @@ function render($template, $data = array()) {
         include $template_path;
         $html = ob_get_clean();
     } else {
-        $html = render_error(404, _('Шаблон не найден'));
+        $html = render_error(404, _('Template was not found'));
     }
 
     return $html;
@@ -16,11 +16,11 @@ function render($template, $data = array()) {
 function render_error($code, $log = '') {
     $config = array(
         403 => array(
-            'title' => _('Доступ запрещен'),
+            'title' => _('Access denied'),
             'header' => 'HTTP/1.1 403 Forbidden',
         ),
         404 => array(
-            'title' => _('Страница не найдена'),
+            'title' => _('Page was not found'),
             'header' => 'HTTP/1.0 404 Not Found',
         ),
     );

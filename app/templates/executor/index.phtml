@@ -4,11 +4,11 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th><?=_('Имя заказа')?></th>
-            <th><?=_('Описание')?></th>
-            <th><?=_('Стоимость')?></th>
-            <th><?=_('Заказчик')?></th>
-            <th><?=_('Дата/время создания')?></th>
+            <th><?=_('Name')?></th>
+            <th><?=_('Description')?></th>
+            <th><?=_('Price')?></th>
+            <th><?=_('Customer')?></th>
+            <th><?=_('Date of completion')?></th>
             <th>&nbsp;</th>
         </tr>
         </thead>
@@ -21,11 +21,15 @@
                     <td><?=$row['cost']?></td>
                     <td><?=$row['customer_login']?></td>
                     <td><?=date('Y-m-d H:i:s', $row['inserted'])?></td>
-                    <td style="text-align: center;"><a href="javascript:" onclick="orders.completeOrder(this, <?=$row['order_id']?>, '<?=$data['token']?>')" class="btn btn-primary"><?=_('Выполнить заказ')?></a></td>
+                    <td style="text-align: center;">
+                        <a href="javascript:" onclick="orders.completeOrder(this, <?=$row['order_id']?>, '<?=$data['token']?>')" class="btn btn-primary">
+                            <?=_('Complete order')?>
+                        </a>
+                    </td>
                 </tr>
             <? endforeach; ?>
         <? else: ?>
-            <tr><td colspan="6"><?=_('Пока новых заказов нет')?></td></tr>
+            <tr><td colspan="6"><?=_('No new orders')?></td></tr>
         <? endif; ?>
         </tbody>
     </table>

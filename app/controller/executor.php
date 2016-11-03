@@ -3,7 +3,7 @@
 require_once APP_PATH . 'dao/orders.php';
 
 /**
- * Проверяем, что текущий пользователь - исполнитель
+ * Check that current user is an executor
  */
 function executor_pre_process() {
     global $user;
@@ -15,12 +15,12 @@ function executor_pre_process() {
 function executor_index_action() {
     global $view_data;
 
-    $view_data['head_title'] = $view_data['page_title'] = _('Доступные заказы');
+    $view_data['head_title'] = $view_data['page_title'] = _('Available orders');
 
-    // получаем последние доступные заказы
+    // get latest available orders
     $orders = get_allowed_orders();
 
-    // получаем логины заказчиков
+    // get customers logins
     $customers_ids = array_column($orders, 'customer_id');
     $customers = get_users_by_ids($customers_ids);
     foreach ($orders as &$order) {
@@ -36,12 +36,12 @@ function executor_index_action() {
 function executor_completed_action() {
     global $user, $view_data;
 
-    $view_data['head_title'] = $view_data['page_title'] = _('Выполненные заказы');
+    $view_data['head_title'] = $view_data['page_title'] = _('Completed orders');
 
-    // получаем выполненные пользователем заказы
+    // get completed orders
     $orders = get_orders_by_executor_id($user['user_id']);
 
-    // получаем логины заказчиков
+    // get customers logins
     $customers_ids = array_column($orders, 'customer_id');
     $customers = get_users_by_ids($customers_ids);
     foreach ($orders as &$order) {
@@ -58,20 +58,20 @@ function executor_completeOrder_action() {
     $order_id = (int)get_param('order_id');
 
     if (!check_token(get_param('token'))) {
-        return ajax_error(_('Неверный токен. Попробуйте перезагрузить страницу.'));
+        return ajax_error(_('Wrong token. Please try to reload the page.'));
     }
 
     $res = complete_order($order_id, $user['user_id'], $user_earned);
     if (!$res) {
         return ajax_error('', array(
             'html' => render('popups/complete_error.phtml'),
-            'button_title' => _('Заказ недоступен'),
+            'button_title' => _('Order is unavailable'),
         ));
     }
 
     return ajax_success(array(
         'new_balance' => number_format($user['balance'] + $user_earned, 2, '.', ''),
         'html' => render('popups/complete_success.phtml'),
-        'button_title' => _('Заказ выпонен'),
+        'button_title' => _('Order is successfully completed'),
     ));
 }

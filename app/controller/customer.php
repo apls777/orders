@@ -3,7 +3,7 @@
 require_once APP_PATH . 'dao/orders.php';
 
 /**
- * Проверяем, что текущий пользователь - заказчик
+ * Check that current user is a customer
  */
 function customer_pre_process() {
     global $user;
@@ -15,12 +15,12 @@ function customer_pre_process() {
 function customer_index_action() {
     global $user, $view_data;
 
-    $view_data['head_title'] = $view_data['page_title'] = _('Мои заказы');
+    $view_data['head_title'] = $view_data['page_title'] = _('My orders');
 
-    // получаем созданные пользователем заказы
+    // get orders created by user
     $orders = get_orders_by_customer_id($user['user_id']);
 
-    // получаем логины исполнителей
+    // get executors logins
     $executors_ids = array_column($orders, 'executor_id');
     $executors = get_users_by_ids($executors_ids);
     foreach ($orders as &$order) {
@@ -36,7 +36,7 @@ function customer_index_action() {
 function customer_add_action() {
     global $view_data;
 
-    $view_data['head_title'] = $view_data['page_title'] = _('Добавление заказа');
+    $view_data['head_title'] = $view_data['page_title'] = _('Add an order');
     $view_data['token'] = generate_token();
 
     return render('customer/add.phtml', $view_data);
@@ -48,44 +48,44 @@ function customer_saveOrder_action() {
     $cost = get_param('cost');
 
     if (!check_token(get_param('token'))) {
-        return ajax_error(_('Неверный токен. Попробуйте перезагрузить страницу.'));
+        return ajax_error(_('Wrong token. Please try to reload the page.'));
     }
 
     if (empty($title)) {
-        return ajax_error(_('Вы не заполнили имя заказа'));
+        return ajax_error(_('Order name is empty'));
     }
 
     if (empty($description)) {
-        return ajax_error(_('Вы не заполнили описание заказа'));
+        return ajax_error(_('Order description is empty'));
     }
 
     $cost = trim(str_replace(',', '.', $cost));
     if (!is_numeric($cost)) {
-        return ajax_error(_('Некорректное значение стоимости'));
+        return ajax_error(_('Price has wrong format'));
     }
     $cost = (float)$cost;
 
     if ($cost < 0) {
-        return ajax_error(_('Стоимость не может быть отрицательной'));
+        return ajax_error(_('Price can\'t has a negative value'));
     }
 
     if ($cost < MIN_ORDER_COST) {
-        return ajax_error(_('Слишком маленькая стоимость заказа'));
+        return ajax_error(_('Price is too low'));
     }
 
     if ($cost > MAX_ORDER_COST) {
-        return ajax_error(_('Слишком большая стоимость заказа'));
+        return ajax_error(_('Price is too high'));
     }
 
     $parts = explode('.', $cost);
     if (isset($parts[1]) && strlen($parts[1]) > 2) {
-        return ajax_error(_('Стоимость не может быть указана с точностью больше, чем 2 знака после запятой.'));
+        return ajax_error(_('Only 2 decimal points are allowed'));
     }
 
     global $user;
     $res = add_order($user['user_id'], $title, $description, $cost);
     if (!$res) {
-        return ajax_error(_('Неизвестная ошибка'));
+        return ajax_error(_('Unknown error'));
     }
 
     return ajax_success();

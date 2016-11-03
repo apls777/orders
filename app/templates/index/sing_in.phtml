@@ -2,34 +2,34 @@
 <div class="row">
     <div id="signin-form" class="col-md-4 col-md-offset-2 col-sm-12">
         <form class="form-signin">
-            <h2 class="form-signin-heading"><?=_('Вход')?></h2>
+            <h2 class="form-signin-heading"><?=_('Sign In')?></h2>
 
-            <label for="inputEmail" class="sr-only"><?=_('Логин')?></label>
-            <input name="login" type="text" id="inputEmail" class="form-control top" placeholder="<?=_('Логин')?>" required autofocus>
+            <label for="inputEmail" class="sr-only"><?=_('Login')?></label>
+            <input name="login" type="text" id="inputEmail" class="form-control top" placeholder="<?=_('Login')?>" required autofocus>
 
-            <label for="inputPassword" class="sr-only"><?=_('Пароль')?></label>
-            <input name="pass" type="password" id="inputPassword" class="form-control bottom" placeholder="<?=_('Пароль')?>" required autocomplete="off">
+            <label for="inputPassword" class="sr-only"><?=_('Password')?></label>
+            <input name="pass" type="password" id="inputPassword" class="form-control bottom" placeholder="<?=_('Password')?>" required autocomplete="off">
 
-            <a href="javascript:" onclick="singIn.auth(this)" class="btn btn-lg btn-primary btn-block"><?=_('Войти')?></a>
+            <a href="javascript:" onclick="singIn.auth(this)" class="btn btn-lg btn-primary btn-block"><?=_('Sing In')?></a>
             <div class="error-wrap">
                 <div class="error-message" style="display: none;"></div>
             </div>
             <table class="table">
                 <tr>
-                    <td colspan="3"><b><?=_('Тестовые аккаунты')?></b></td>
+                    <td colspan="3"><b><?=_('Test accounts')?></b></td>
                 </tr>
                 <tr>
-                    <td><?=_('Баланс системы')?></td>
+                    <td><?=_('System balance')?></td>
                     <td>admin</td>
                     <td>Test11</td>
                 </tr>
                 <tr>
-                    <td><?=_('Заказчик')?></td>
+                    <td><?=_('Customer')?></td>
                     <td>customer</td>
                     <td>Test11</td>
                 </tr>
                 <tr>
-                    <td><?=_('Исполнитель')?></td>
+                    <td><?=_('Executor')?></td>
                     <td>executor</td>
                     <td>Test11</td>
                 </tr>
@@ -38,25 +38,25 @@
     </div>
     <div id="registration-form" class="col-md-4 col-sm-12">
         <form class="form-signin">
-            <h2 class="form-signin-heading"><?=_('Регистрация')?></h2>
+            <h2 class="form-signin-heading"><?=_('Registration')?></h2>
             <div class="roles">
                 <label class="radio-inline">
-                    <input type="radio" name="reg_role" id="inlineRadio1" value="<?=ROLE_CUSTOMER?>"> <?=_('Заказчик')?>
+                    <input type="radio" name="reg_role" id="inlineRadio1" value="<?=ROLE_CUSTOMER?>"> <?=_('Customer')?>
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="reg_role" id="inlineRadio2" value="<?=ROLE_EXECUTOR?>"> <?=_('Исполнитель')?>
+                    <input type="radio" name="reg_role" id="inlineRadio2" value="<?=ROLE_EXECUTOR?>"> <?=_('Executor')?>
                 </label>
             </div>
-            <label for="regEmail" class="sr-only"><?=_('Логин')?></label>
-            <input name="reg_login" type="text" id="regEmail" class="form-control top" placeholder="<?=_('Логин')?>" required autofocus autocomplete="off">
+            <label for="regEmail" class="sr-only"><?=_('Login')?></label>
+            <input name="reg_login" type="text" id="regEmail" class="form-control top" placeholder="<?=_('Login')?>" required autofocus autocomplete="off">
 
-            <label for="regPass" class="sr-only"><?=_('Пароль')?></label>
-            <input name="reg_pass" type="password" id="regPass" class="form-control middle" placeholder="<?=_('Пароль')?>" required autocomplete="off">
+            <label for="regPass" class="sr-only"><?=_('Password')?></label>
+            <input name="reg_pass" type="password" id="regPass" class="form-control middle" placeholder="<?=_('Password')?>" required autocomplete="off">
 
-            <label for="regPassRepeat" class="sr-only"><?=_('Еще раз')?></label>
-            <input name="reg_pass_retry" type="password" id="regPassRepeat" class="form-control bottom" placeholder="<?=_('Еще раз')?>" required autocomplete="off">
+            <label for="regPassRepeat" class="sr-only"><?=_('Repeat password')?></label>
+            <input name="reg_pass_retry" type="password" id="regPassRepeat" class="form-control bottom" placeholder="<?=_('Repeat password')?>" required autocomplete="off">
 
-            <a href="javascript:" onclick="singIn.register(this)" class="btn btn-lg btn-primary btn-block"><?=_('Зарегистрироваться')?></a>
+            <a href="javascript:" onclick="singIn.register(this)" class="btn btn-lg btn-primary btn-block"><?=_('Register')?></a>
             <div class="error-message" style="display: none;"></div>
         </form>
     </div>

@@ -5,7 +5,7 @@ define('MKEY_USER', 'user');
 require_once APP_PATH . 'service/db.php';
 
 /**
- * Получаем пользователя по его ID
+ * Get user by ID
  *
  * @param $user_id
  * @return array|bool
@@ -20,7 +20,7 @@ function get_user_by_id($user_id) {
 }
 
 /**
- * Получаем пользователя по его ID
+ * Get users by IDs
  *
  * @param array $users_ids
  * @return array
@@ -56,7 +56,7 @@ function get_users_by_ids(array $users_ids) {
 }
 
 /**
- * Получаем пользователя по его логину
+ * Get user by login
  *
  * @param $login
  * @return array|bool
@@ -71,7 +71,7 @@ function get_user_by_login($login) {
 }
 
 /**
- * Регистрируем нового пользователя
+ * Add new user
  *
  * @param $role
  * @param $login
@@ -85,12 +85,14 @@ function add_user($role, $login, $pass) {
         'pass' => get_password_hash($pass),
         'inserted' => TIME,
     ));
+    if (!$res) {
+        return false;
+    }
 
     return db_insert_id('users');
 }
 
 function increase_user_balance($user_id, $amount) {
-
     $res = db_query('UPDATE users SET balance = balance + ' . $amount . ' WHERE user_id = ' . $user_id, 'users');
     mc_delete(MKEY_USER . ':' . $user_id);
     return $res;

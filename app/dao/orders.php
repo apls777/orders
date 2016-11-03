@@ -3,7 +3,7 @@
 define('MKEY_ALLOWD_ORDERS', 'allowed_orders');
 
 /**
- * Получаем доступные заказы
+ * Get available orders
  *
  * @param $limit
  * @param $lastOrderId
@@ -14,7 +14,7 @@ function get_allowed_orders($limit = LIMIT_ALLOWED_ORDERS, $lastOrderId = 0) {
     $lastOrderId = (int)$lastOrderId;
     $mkey = MKEY_ALLOWD_ORDERS . ':' . $limit;
 
-    // пробуем достать первую страницу из кэша
+    // try to get first page from cache
     if (!$lastOrderId) {
         $res = mc_get($mkey);
         if (is_array($res)) {
@@ -22,7 +22,7 @@ function get_allowed_orders($limit = LIMIT_ALLOWED_ORDERS, $lastOrderId = 0) {
         }
     }
 
-    // получаем доступные для выполнения заказы
+    // get orders which should be completed
     $sql = 'SELECT * FROM orders WHERE executor_id = 0';
     if ($lastOrderId) {
         $sql .= ' AND order_id < ' . $lastOrderId;
@@ -33,7 +33,7 @@ function get_allowed_orders($limit = LIMIT_ALLOWED_ORDERS, $lastOrderId = 0) {
         $res = array();
     }
 
-    // если это первая страница, кэшируем ее
+    // if it's a first page, cache it
     if (!$lastOrderId) {
         mc_set(MKEY_ALLOWD_ORDERS, $res);
     }
@@ -42,8 +42,8 @@ function get_allowed_orders($limit = LIMIT_ALLOWED_ORDERS, $lastOrderId = 0) {
 }
 
 /**
- * Получаем все заказы созданные заказиком
- * Кэширование здесь не нужно
+ * Get all orders which were created by customer.
+ * We don't need a cache here.
  *
  * @param $customer_id
  * @return array
@@ -59,8 +59,8 @@ function get_orders_by_customer_id($customer_id) {
 }
 
 /**
- * Получаем все заказы выполненные исполнителем
- * Кэширование здесь не нужно
+ * Get all orders which were completed by executor.
+ * We don't need a cache here.
  *
  * @param $executor_id
  * @return array
@@ -76,7 +76,7 @@ function get_orders_by_executor_id($executor_id) {
 }
 
 /**
- * Получаем заказ по его ID
+ * Get order by ID
  *
  * @param $order_id
  * @return array|bool
@@ -92,7 +92,7 @@ function get_order_by_id($order_id) {
 }
 
 /**
- * Добавляем новый заказ
+ * Add new order
  *
  * @param $customer_id
  * @param $title
@@ -109,14 +109,14 @@ function add_order($customer_id, $title, $description, $cost) {
         'inserted' => TIME,
     ));
 
-    // чистим кэш доступных заказов
+    // clear cache for available orders
     mc_delete(MKEY_ALLOWD_ORDERS . ':' . LIMIT_ALLOWED_ORDERS);
 
     return $res;
 }
 
 /**
- * Выполнение заказа
+ * Complete an order
  *
  * @param $order_id
  * @param $executor_id
@@ -124,11 +124,11 @@ function add_order($customer_id, $title, $description, $cost) {
  * @return bool
  */
 function complete_order($order_id, $executor_id, &$user_earned = false) {
-    // транзакцию делаем в базе, где лежит табличка users
+    // start a transaction for DB with users table
     $table = 'users';
     db_begin($table);
 
-    // выполняем заказ
+    // complete an order
     $res = db_update('orders', array(
         'executor_id' => $executor_id,
         'completed' => TIME,
@@ -138,14 +138,14 @@ function complete_order($order_id, $executor_id, &$user_earned = false) {
         return false;
     }
 
-    // проверяем, что заказ был выполнен
+    // check that an order was completed
     $res = db_affected_rows('orders');
     if (!$res) {
         db_rollback($table);
         return false;
     }
 
-    // получаем информацию о заказе
+    // get an order info
     $order = get_order_by_id($order_id);
     if (!$order) {
         db_rollback($table);
@@ -153,19 +153,19 @@ function complete_order($order_id, $executor_id, &$user_earned = false) {
     }
 
     bcscale(2);
-    // такого быть не должно, но стоимость заказа не может быть меньше MIN_ORDER_COST
+    // an order price can't be lower than MIN_ORDER_COST
     if (bccomp($order['cost'], MIN_ORDER_COST) === -1) {
         db_rollback($table);
         return false;
     }
 
-    // получаем размер комиссии системы
+    // get commission amount
     $project_earned = bcmul($order['cost'], bcdiv(PROJECT_PERCENT, 100));
     if (bccomp($project_earned, MIN_PROJECT_COMMISSION) === -1) {
         $project_earned = MIN_PROJECT_COMMISSION;
     }
 
-    // обновляем баланс пользователя
+    // update user balance
     $user_earned = bcsub($order['cost'], $project_earned);
     $res = increase_user_balance($executor_id, $user_earned);
     if (!$res) {
@@ -173,14 +173,14 @@ function complete_order($order_id, $executor_id, &$user_earned = false) {
         return false;
     }
 
-    // обновляем баланс системы
+    // update system balance
     $res = increase_user_balance(SYSTEM_USER_ID, $project_earned);
     if (!$res) {
         db_rollback($table);
         return false;
     }
 
-    // чистим кэш доступных заказов
+    // clear cache for available orders
     mc_delete(MKEY_ALLOWD_ORDERS . ':' . LIMIT_ALLOWED_ORDERS);
 
     db_commit($table);

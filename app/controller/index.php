@@ -1,14 +1,14 @@
 <?php
 
 /*
- * Страница логина и регистрации
+ * Login and registration page
  */
 function index_index_action() {
     global $user, $view_data;
 
-    $view_data['head_title'] = _('Вход');
+    $view_data['head_title'] = _('Sing In / Registration');
 
-    // если пользователь авторизован, редиректим его в свой кабинет
+    // if user is already authorized, redirect him to personal area
     if ($user) {
         $urls = array(
             ROLE_ADMIN => '/admin/',

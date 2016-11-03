@@ -1,7 +1,7 @@
 <?php
 
 /**
- * URL до файла статики
+ * Returns URL for static file
  *
  * @param $path
  * @return string
@@ -11,7 +11,7 @@ function get_static_url($path) {
 }
 
 /**
- * Добавляем в шапку скрипт
+ * Add a script URL to site head
  *
  * @param $path
  */
@@ -21,7 +21,7 @@ function append_script($path) {
 }
 
 /**
- * Добавляем в шапку css'ку
+ * Add a CSS URL to site head
  *
  * @param $path
  */
@@ -31,7 +31,7 @@ function append_css($path) {
 }
 
 /**
- * Внешний редирект
+ * External redirect
  *
  * @param $url
  */
@@ -41,7 +41,7 @@ function redirect($url) {
 }
 
 /**
- * Внутренный редирект
+ * Internal redirect
  *
  * @param $url
  */
@@ -64,7 +64,7 @@ function get_legacy_param($name, $default = false) {
 }
 
 /**
- * Генерация токена для защиты от CSRF
+ * Generate CSRF token
  *
  * @return string
  */
@@ -75,7 +75,7 @@ function generate_token() {
 }
 
 /**
- * Проверяем токен
+ * Check CSRF token
  *
  * @param $token
  * @return bool
