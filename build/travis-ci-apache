@@ -1,6 +1,6 @@
 <VirtualHost *:80>
+  ServerName localhost
   ServerAdmin webmaster@localhost
-
   DocumentRoot %TRAVIS_BUILD_DIR%
 
   <Directory "%TRAVIS_BUILD_DIR%">
@@ -10,6 +10,8 @@
     Allow from all
   </Directory>
 
+  SetEnv APPLICATION_ENV testing
+
   # Wire up Apache to use Travis CI's php-fpm.
   <IfModule mod_fastcgi.c>
     AddHandler php5-fcgi .php
@@ -18,12 +20,9 @@
     FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
   </IfModule>
 
-
   ErrorLog ${APACHE_LOG_DIR}/error.log
-
-  # Possible values include: debug, info, notice, warn, error, crit,
-  # alert, emerg.
-  LogLevel warn
-
   CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+  # Possible values include: debug, info, notice, warn, error, crit, alert, emerg.
+  LogLevel warn
 </VirtualHost>
