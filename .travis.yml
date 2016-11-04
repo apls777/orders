@@ -3,8 +3,7 @@ php:
   - 5.6
 
 env:
-  - SAUCE_USER=testqwe123
-  - SAUCE_KEY=68d89191-ae15-40b1-aa5a-a11b2b6d07f4
+  - SAUCE_USER=testqwe123 SAUCE_KEY=68d89191-ae15-40b1-aa5a-a11b2b6d07f4
 
 matrix:
   fast_finish: true
