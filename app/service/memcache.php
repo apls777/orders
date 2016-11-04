@@ -1,11 +1,13 @@
 <?php
 
 function mc_init() {
-    global $memcached, $config;
+    global $memcache_pool, $config;
 
-    $memcached = new Memcached();
-    foreach ($config['memcache'] as $server) {
-        $memcached->addServer($server[0], $server[1]);
+    $servers = $config['memcache'];
+    $firstServer = array_shift($servers);
+    $memcache_pool = memcache_connect($firstServer[0], $firstServer[1]);
+    foreach ($servers as $server) {
+        memcache_add_server($memcache_pool, $server[0], $server[1]);
     }
 }
 
@@ -16,9 +18,8 @@ function mc_init() {
  * @return bool
  */
 function mc_set($key, $value, $ttl = 900) {
-    /** @var Memcached $memcached */
-    global $memcached;
-    return $memcached->set($key, $value, $ttl);
+    global $memcache_pool;
+    return memcache_set($memcache_pool, $key, $value, 0, $ttl);
 }
 
 /**
@@ -26,9 +27,8 @@ function mc_set($key, $value, $ttl = 900) {
  * @return mixed
  */
 function mc_get($key) {
-    /** @var Memcached $memcached */
-    global $memcached;
-    return $memcached->get($key);
+    global $memcache_pool;
+    return memcache_get($memcache_pool, $key);
 }
 
 /**
@@ -36,7 +36,6 @@ function mc_get($key) {
  * @return bool
  */
 function mc_delete($key) {
-    /** @var Memcached $memcached */
-    global $memcached;
-    return $memcached->delete($key);
+    global $memcache_pool;
+    return memcache_delete($memcache_pool, $key);
 }

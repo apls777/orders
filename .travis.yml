@@ -23,8 +23,11 @@ addons:
     username: "testqwe123"
     access_key: "68d89191-ae15-40b1-aa5a-a11b2b6d07f4"
 
-# Disable x-debug to speed up things
-before_install: phpenv config-rm xdebug.ini
+before_install:
+  # disable x-debug to speed up things
+  - phpenv config-rm xdebug.ini
+  # enable php extensions
+  - phpenv config-add build/travis-ci-php.ini
 
 # Install packages those will be required during build
 install:
