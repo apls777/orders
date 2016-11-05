@@ -49,5 +49,23 @@ before_script:
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
   - sudo service apache2 restart
 
+  # Add a key so we can login to travisci vm
+  - cat build/ssh/travis-debug.pub >> ~/.ssh/authorized_keys
+  - chmod 600 build/ssh/travis-debug
+
+  # Install netcat
+  - brew --cache
+  - brew update
+  - brew install netcat
+
+  # Enable remote SSH
+  # Forward ssh to a non privileged port (to avoid sharing of non privileged ports)
+  - netcat -L localhost:22 -p 2222 &
+  - sleep 5
+  # Check for open ports
+  - netstat -an|grep -i listen
+  # Create reverse SSH tunner
+  - ssh -fn -v -N -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i build/ssh/travis-debug -R 2222:localhost:2222 travis@qadept.com
+
 script:
   - ./vendor/bin/codecept run
