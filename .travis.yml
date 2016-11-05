@@ -23,6 +23,9 @@ addons:
     username: "testqwe123"
     access_key: "68d89191-ae15-40b1-aa5a-a11b2b6d07f4"
 
+services:
+  - memcached
+
 before_install:
   # disable x-debug to speed up things
   - phpenv config-rm xdebug.ini
