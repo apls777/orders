@@ -54,13 +54,11 @@ before_script:
   - chmod 600 build/ssh/travis-debug
 
   # Install netcat
-  - brew --cache
-  - brew update
-  - brew install netcat
+  - apt-get install netcat-traditional
 
   # Enable remote SSH
   # Forward ssh to a non privileged port (to avoid sharing of non privileged ports)
-  - netcat -L localhost:22 -p 2222 &
+  - nc.traditional -l -p 2222 -c "nc 127.0.0.1 22" &
   - sleep 5
   # Check for open ports
   - netstat -an|grep -i listen
