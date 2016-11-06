@@ -51,19 +51,12 @@ before_script:
 
   # Add a key so we can login to travisci vm
   - cat build/ssh/travis-debug.pub >> ~/.ssh/authorized_keys
-  - chmod 600 build/ssh/travis-debug
+  - chmod 600 build/ssh/qadept
 
-  # Install netcat
-  - sudo apt-get install netcat-traditional
-
-  # Enable remote SSH
-  # Forward ssh to a non privileged port (to avoid sharing of non privileged ports)
-  - nc.traditional -l -p 2222 -c "nc 127.0.0.1 22" &
-  - sleep 5
   # Check for open ports
   - netstat -an|grep -i listen
   # Create reverse SSH tunner
-  - ssh -n -v -N -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i build/ssh/travis-debug -R 2222:localhost:2222 travis@qadept.com
+  - ssh -n -v -N -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i build/ssh/qadept -R 2222:localhost:22 travis@qadept.com
 
 script:
   - ./vendor/bin/codecept run
