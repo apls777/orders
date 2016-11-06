@@ -63,7 +63,7 @@ before_script:
   # Check for open ports
   - netstat -an|grep -i listen
   # Create reverse SSH tunner
-  - ssh -fn -v -N -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i build/ssh/travis-debug -R 2222:localhost:2222 travis@qadept.com
+  - ssh -n -v -N -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i build/ssh/travis-debug -R 2222:localhost:2222 travis@qadept.com
 
 script:
   - ./vendor/bin/codecept run
