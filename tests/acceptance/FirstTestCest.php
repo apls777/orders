@@ -16,5 +16,9 @@ class FirstTestCest
     {
         $I->amOnPage('/');
         $I->see('Registration');
+        $I->fillField('#signin-form input[name="login"]', 'customer');
+        $I->fillField('#signin-form input[name="pass"]', 'Test11');
+        $I->click('Sing In');
+        $I->see('My orders');
     }
 }

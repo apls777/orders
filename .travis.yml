@@ -48,15 +48,8 @@ before_script:
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
   - sudo service apache2 restart
-
-  # Add a key so we can login to travisci vm
-  - cat build/ssh/travis-debug.pub >> ~/.ssh/authorized_keys
-  - chmod 600 build/ssh/qadept
-
-  # Check for open ports
-  - netstat -an|grep -i listen
-  # Create reverse SSH tunner
-  - ssh -n -v -N -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i build/ssh/qadept -R 2222:localhost:22 travis@qadept.com
+  - mysql -u root -e 'CREATE DATABASE vktest CHARACTER SET utf8 COLLATE utf8_general_ci;'
+  - mysql -u root vktest < tables.sql
 
 script:
   - ./vendor/bin/codecept run
