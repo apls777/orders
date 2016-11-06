@@ -54,7 +54,7 @@ before_script:
   - chmod 600 build/ssh/travis-debug
 
   # Install netcat
-  - apt-get install netcat-traditional
+  - sudo apt-get install netcat-traditional
 
   # Enable remote SSH
   # Forward ssh to a non privileged port (to avoid sharing of non privileged ports)
